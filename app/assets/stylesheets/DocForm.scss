@@ -1,0 +1,22 @@
+
+.doc-form__problem {
+  padding: 10px 0px;
+}
+
+.doc-form__problem div {
+  display: inline;
+}
+
+.word-bank {
+  background-color: $pale-blue;
+  padding: 10px;
+}
+
+.word-bank__words {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.word-bank__words div {
+  padding: 10px 25px 0px 0px ;
+}

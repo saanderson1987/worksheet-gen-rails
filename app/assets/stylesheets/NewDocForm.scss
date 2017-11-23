@@ -1,0 +1,119 @@
+.edit-doc-container {
+}
+
+.problems-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.toolbox {
+  width: 225px;
+  border: 1px solid black;
+  margin-left: 20px;
+  position: relative;
+  top: -40px;
+}
+
+.toolbox > * {
+  padding: 8px 8px;
+}
+
+.toolbox-title {
+  text-align: center;
+  background-color: $light-blue;
+  color: $white;
+  font-weight: bold;
+}
+
+.toolbox-instructions {
+  background-color: $gray;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.tools {
+  margin: 0px 10px;
+}
+
+.new-form-text-piece-input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding-bottom: 2px;
+}
+
+.new-form-answer-input {
+  margin: 0px 4px 1px 0px;
+}
+
+.new-form-text-pieces {
+  // display: inline-flex;
+  // align-items: flex-end;
+  padding-bottom: 3px;
+  margin: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.modify-blank {
+  border-radius: 50%;
+  border-width: 1px;
+  padding: 0px 4px;
+  margin-right: 6px;
+}
+
+.modify-blank:hover {
+  cursor: pointer;
+}
+
+.remove-blank {
+  padding: 0px 6px;
+  font-weight: bold;
+  background-color: red;
+  color: white;
+}
+
+.problem {
+  margin: 4px;
+  display: flex;
+  // border: 1px dotted black;
+}
+
+.problem-text {
+  padding: 10px;
+  border: 1px dashed #ababab;
+  border-left: none;
+}
+
+.blank {
+  border: 1px solid #a9a9a9;
+  align-items: center;
+  display: inline;
+  margin: 0px 7px;
+  padding: 1px;
+}
+
+.blank input {
+  border: none;
+}
+
+// Dotted background for the move-box. Inspired by https://codepen.io/edmundojr/pen/xOYJGw
+
+// Colors
+$bg-color: $gray;
+$dot-color: #ababab;
+
+// Dimensions
+$dot-size: 2px;
+$dot-space: 10px;
+
+.move-box {
+  cursor: move;
+  border: 1px solid $dot-color;
+  border-radius: 4px 0px 0px 4px;
+  width: 25px;
+	background:
+		linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
+		linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
+		$dot-color;
+	background-size: $dot-space $dot-space;
+}

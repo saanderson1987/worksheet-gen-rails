@@ -1,0 +1,21 @@
+.button-row {
+  display: flex;
+}
+
+.button-row button:not(:first-child) {
+  margin-left: 25px;
+}
+
+button {
+  border: none;
+  font: inherit;
+  padding: 10px 17px;
+  border: 1px solid #AAAAAA;
+  background-color: $gray;
+}
+
+.button_green {
+  background-color: $green;
+  color: white;
+  border: none;
+}
