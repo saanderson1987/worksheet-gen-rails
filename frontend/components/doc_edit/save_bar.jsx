@@ -2,11 +2,14 @@ import React from 'react';
 
 export default class SaveBar extends React.Component {
   render() {
+    const saveButton = this.props.saved ?
+      <button className='button--small'>SAVED</button> :
+      <button className='button--small button--green' onClick={this.props.updateDoc}>
+        SAVE CHANGES
+      </button>;
     return (
       <div className='save-bar'>
-        <button className='button--small button--green' onClick={this.props.updateDoc}>
-          SAVE CHANGES
-        </button>
+        {saveButton}
         <div className='update-time'>Last updated at {this.getTimeLastUpdated()}</div>
       </div>
     );
@@ -25,4 +28,5 @@ export default class SaveBar extends React.Component {
     };
     return updateTime.toLocaleString('en-US', format);
   }
+
 }

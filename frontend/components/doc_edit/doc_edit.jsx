@@ -31,12 +31,15 @@ class EditDocForm extends React.Component {
     this.splitText = this.splitText.bind(this);
     this.rejoinText = this.rejoinText.bind(this);
     const doc = this.props.doc ? this.props.doc : {};
-    this.state = doc;
+    this.state = {
+      doc
+    };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.doc) {
       this.setState( nextProps.doc );
+      this.setState( {saved: true} );
     }
   }
 
@@ -44,8 +47,10 @@ class EditDocForm extends React.Component {
     this.props.fetchDocument(this.props.match.params.id);
   }
 
-  componentDidUpdate() {
-    this.setState({unsaved: true});
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps === this.props) {
+      if (this.state.saved) this.setState({saved: false});
+    }
   }
 
   render() {
@@ -59,7 +64,7 @@ class EditDocForm extends React.Component {
 
     return (
       <div>
-        <SaveBar updateDoc={this.updateDoc} updatedAt ={this.props.doc.updated_at}/>
+        <SaveBar updateDoc={this.updateDoc} updatedAt={this.props.doc.updated_at} saved={this.state.saved}/>
         <div className='edit-doc-container'>
           <div>
             <input
@@ -107,10 +112,6 @@ class EditDocForm extends React.Component {
                 rejoinText={this.rejoinText}
               />
             </div>
-            {/* <ButtonRow>
-              <button>Cancel</button>
-              <button className='button--green' onClick={this.updateDoc}>Save Changes</button>
-            </ButtonRow> */}
           </div>
         </div>
       </div>
@@ -325,7 +326,9 @@ class EditDocForm extends React.Component {
   updateDoc(event) {
     event.preventDefault();
     const updatedDoc = merge({}, this.props.doc, this.state);
+    delete updatedDoc.saved;
     this.props.updateDocument(updatedDoc);
+    this.setState({saved: true});
   }
 
 }
