@@ -15,7 +15,11 @@ button {
   cursor: pointer;
 }
 
-.button_green {
+.button--small {
+  padding: 5px 8px;
+}
+
+.button--green {
   background-color: $green;
   color: white;
   border: none;

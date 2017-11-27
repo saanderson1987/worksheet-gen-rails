@@ -7,6 +7,7 @@ import update from 'immutability-helper';
 import shortid from 'shortid';
 import merge from 'lodash/merge';
 
+import SaveBar from './save_bar.jsx';
 import Instructions from '../doc_view/instructions.jsx';
 import Problems from './Problems.jsx';
 import ButtonRow from '../ui/button_row.jsx';
@@ -43,6 +44,10 @@ class EditDocForm extends React.Component {
     this.props.fetchDocument(this.props.match.params.id);
   }
 
+  componentDidUpdate() {
+    this.setState({unsaved: true});
+  }
+
   render() {
     if (this.props.doc === undefined) {
       return(<div>Loading...
@@ -54,6 +59,7 @@ class EditDocForm extends React.Component {
 
     return (
       <div>
+        <SaveBar updateDoc={this.updateDoc} updatedAt ={this.props.doc.updated_at}/>
         <div className='edit-doc-container'>
           <div>
             <input
@@ -101,10 +107,10 @@ class EditDocForm extends React.Component {
                 rejoinText={this.rejoinText}
               />
             </div>
-            <ButtonRow>
+            {/* <ButtonRow>
               <button>Cancel</button>
-              <button className='button_green' onClick={this.updateDoc}>Save Changes</button>
-            </ButtonRow>
+              <button className='button--green' onClick={this.updateDoc}>Save Changes</button>
+            </ButtonRow> */}
           </div>
         </div>
       </div>

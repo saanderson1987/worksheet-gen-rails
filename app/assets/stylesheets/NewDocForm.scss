@@ -1,4 +1,19 @@
 .edit-doc-container {
+  padding: 13px;
+}
+
+.save-bar {
+  font-size: 0.7em;
+  border-bottom: 1px solid $gray;
+  padding: 5px;
+  position: sticky;
+  top: 0;
+  background: white;
+}
+
+.update-time {
+  display: inline;
+  margin-left: 20px;
 }
 
 .problems-container {
