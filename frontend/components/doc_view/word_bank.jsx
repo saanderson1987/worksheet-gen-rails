@@ -1,4 +1,5 @@
 import React from 'react';
+import shortid from 'shortid';
 
 class WordBank extends React.Component {
   render() {
@@ -9,7 +10,7 @@ class WordBank extends React.Component {
           {
             this.props.wordBank.map( (word) => {
               return (
-                <div>{word}</div>
+                <div key={shortid.generate()}>{word}</div>
               );
             })
           }

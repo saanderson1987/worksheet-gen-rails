@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import shortid from 'shortid';
 
 const sessionLinks = () => (
   <nav className="login-signup">
@@ -29,34 +28,19 @@ export default class NavBar extends React.Component {
   }
 
   render() {
-    const pages = {
-      my_subscribed_docs:
-        <div className='nav__row2-item'>Documents I'm Subscribed To</div>,
-      my_created_docs:
-        <div className='nav__row2-item'><Link to='/my_created_docs/'>Documents I've Created</Link></div>,
-      new_doc:
-        <div className='nav__row2-item'>
-          <div className="plus-icon">+</div>
-          <div className='nav__row2-text_left-of-icon'>New Document</div>
-        </div>,
-    };
-
-    const currentPage = this.props.path.slice(1);
-    pages[currentPage] =
-      <div className='nav__row2-item--selected'>{pages[currentPage]}</div>;
-
     return (
         <nav>
           <div className="nav__row1">
             <div className="nav__logo">Worksheet Generator</div>
-            <div style={{cursor: 'pointer'}} onClick={this.props.logout}>
-              Logout
-            </div>
+            <div style={{cursor: 'pointer'}} onClick={this.props.logout}>Logout</div>
           </div>
           <div className="nav__row2" >
-            { Object.values(pages).map( page => (
-              <div key={shortid.generate()}>{page}</div>)
-            ) }
+            <div className='nav__row2-item'>Documents I'm Subscribed To</div>
+            <div className='nav__row2-item'>Documents I've Created</div>
+            <div className='nav__row2-item'>
+              <div className="plus-icon">+</div>
+              <div className='nav__row2-text_left-of-icon'>New Document</div>
+            </div>
           </div>
         </nav>
     );

@@ -1,15 +1,15 @@
 import shortid from 'shortid';
 
 export const docList = [
-  { id: 1, title: 'WS1'}, { id: 2, title: 'WS2' }, { id: 3, title: 'WS3'}
+  { id: 1, title: 'WS1', owner: true,}, { id: 2, title: 'WS2' }, { id: 3, title: 'WS3'}
 ];
 
-const ws1 = {
-  docName: 'WS1',
+export const ws1 = {
+  title: 'WS1',
   course: 'ESL 301',
   docType: 'fill-in-the-blank',
   instructions: 'Fill in the blanks with the words in the bank.',
-  probs: [
+  problems: [
     {
       id: shortid.generate(),
       textPieces: [

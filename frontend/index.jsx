@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { login, signup, logout } from './util/session_api_util.js';
-import { login as loginAction } from './actions/session_actions.js';
-import Root from './components/root';
 import configureStore from './store/store';
+import Root from './components/root';
 
-window.login = loginAction;
-window.signup = signup;
-window.logout = logout;
+import * as documents from './util/document_api_util.js';
+
+
+window.documents = documents;
 
 document.addEventListener('DOMContentLoaded', () => {
   let store;

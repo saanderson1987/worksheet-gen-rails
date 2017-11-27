@@ -1,21 +1,22 @@
 import React from 'react';
+import shortid from 'shortid';
 
 class TextPieces extends React.Component {
   render() {
     return (
       <div>
         {
-          this.props.problem.textPieces.map( (textPiece, idx) => {
-            if (textPiece.blank) {
+          Object.values(this.props.problem.textPieces).map( (textPiece, idx) => {
+            if (textPiece.blank === 'true') {
               return (
                 <input
-                  key={ textPiece.id }
+                  key={ shortid.generate() }
                   value={ textPiece.text }
                   onChange={ this.props.handleInputChange(this.props.problemIdx, idx) }
                 />
               );
             } else {
-              return <div key={ textPiece.id }> { textPiece.text } </div>;
+              return <div key={ shortid.generate() }> { textPiece.text } </div>;
             }
           })
         }

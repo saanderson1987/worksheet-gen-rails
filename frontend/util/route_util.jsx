@@ -17,9 +17,12 @@ const Protected = ({ component: Component, path, loggedIn }) => {
   return (
     <Route path={path} render={(props) => (
        loggedIn ? (
+         path === '/' ? <Redirect to='/my_created_docs/' /> :
           <div>
-            <NavBarContainer />
-            <Component {...props} />
+            <NavBarContainer path={path} />
+            <div className='page-container'>
+              <Component {...props} />
+            </div>
           </div>
       ) : (
         <Redirect to="/login" />
