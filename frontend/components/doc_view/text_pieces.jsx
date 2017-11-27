@@ -10,13 +10,13 @@ class TextPieces extends React.Component {
             if (textPiece.blank === 'true') {
               return (
                 <input
-                  key={ shortid.generate() }
+                  key={ idx }
                   value={ textPiece.text }
                   onChange={ this.props.handleInputChange(this.props.problemIdx, idx) }
                 />
               );
             } else {
-              return <div key={ shortid.generate() }> { textPiece.text } </div>;
+              return <div key={ idx }> { textPiece.text } </div>;
             }
           })
         }

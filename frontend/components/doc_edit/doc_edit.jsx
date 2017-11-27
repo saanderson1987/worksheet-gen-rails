@@ -8,6 +8,7 @@ import shortid from 'shortid';
 import merge from 'lodash/merge';
 
 import SaveBar from './save_bar.jsx';
+import Loading from '../ui/loading.jsx';
 import Instructions from '../doc_view/instructions.jsx';
 import Problems from './Problems.jsx';
 import ButtonRow from '../ui/button_row.jsx';
@@ -54,13 +55,7 @@ class EditDocForm extends React.Component {
   }
 
   render() {
-    if (this.props.doc === undefined) {
-      return(<div>Loading...
-          <br /> this.state:
-          {JSON.stringify(this.state)}
-          <br />this.props:
-          {JSON.stringify(this.props)}</div>);
-    }
+    if (this.props.doc === undefined) return <Loading />;
 
     return (
       <div>

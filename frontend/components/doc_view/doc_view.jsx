@@ -4,6 +4,7 @@ import { fetchDocument } from '../../actions/document_actions.js';
 import { shuffle } from '../../util/methods.js';
 import {cloneDeep} from 'lodash';
 // import DocResults from './doc_results.jsx';
+import Loading from '../ui/loading.jsx';
 import Problems from './problems.jsx';
 import WordBank from './word_bank.jsx';
 import Instructions from './instructions.jsx';
@@ -31,15 +32,10 @@ class DocView extends React.Component {
   }
 
   render() {
-    if (this.props.doc === undefined) {
-      return(<div>Loading...
-          <br /> this.state:
-          {JSON.stringify(this.state)}
-          <br />this.props:
-          {JSON.stringify(this.props)}</div>);
-    }
+    if (this.props.doc === undefined) return <Loading />;
+
     return (
-      <div>
+      <div className='contents-container'>
         <h1>{ this.props.doc.title }</h1>
         <div>{this.props.doc.course}</div>
         <Instructions instructions={this.props.doc.instructions}/>
@@ -49,12 +45,14 @@ class DocView extends React.Component {
           handleInputChange={this.handleInputChange}
         />
         <button className='button_green' onClick={this.handleSubmit}>Submit</button>
+        {JSON.stringify(this.state)}
       </div>
     );
   }
 
   handleInputChange(problemIdx, textPieceIdx) {
     return (event) => {
+      event.preventDefault();
       const value = event.target.value;
       const problems = cloneDeep(this.state.problems);
       problems[problemIdx].textPieces[textPieceIdx].text = value;

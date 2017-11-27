@@ -9,7 +9,7 @@ class Problems extends React.Component {
         {
           this.props.problems.map( (problem, idx) => {
             return (
-              <div className='doc-form__problem' key={shortid.generate()}>
+              <div className='doc-form__problem' key={idx}>
                 <div>{idx+1}.</div>
                 <TextPieces
                   problem={this.props.problems[idx]}
