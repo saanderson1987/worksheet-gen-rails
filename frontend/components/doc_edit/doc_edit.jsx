@@ -123,12 +123,14 @@ class EditDocForm extends React.Component {
     problems[problemIdx].textPieces.splice(textPieceIdx, 0, {
       text: '',
       blank: 'true',
+      id: shortid.generate(),
     });
     const nextTextPiece = problems[problemIdx].textPieces[textPieceIdx + 1];
     if (!nextTextPiece) {
       problems[problemIdx].textPieces.splice(textPieceIdx + 1, 0, {
         text: '',
         blank: 'false',
+        id: shortid.generate(),
       });
     }
     this.setState({ problems });

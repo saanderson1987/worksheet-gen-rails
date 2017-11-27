@@ -11,7 +11,7 @@ class TextPieces extends React.Component {
           this.props.problem.textPieces.map( (textPiece, idx) => {
             if (textPiece.blank === 'true') {
               return (
-                  <div key={ shortid.generate() } className='blank'>
+                  <div key={ textPiece.id } className='blank'>
                     <input
                       placeholder="Answer blank"
                       className='new-form-answer-input'
@@ -28,7 +28,7 @@ class TextPieces extends React.Component {
 
               return (
                 <TextPiece
-                  key={ shortid.generate() }
+                  key={ textPiece.id }
                   problemIdx={this.props.problemIdx}
                   textPieceIdx={idx}
                   dropBlank={this.props.dropBlank}

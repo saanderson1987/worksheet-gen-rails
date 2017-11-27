@@ -23,7 +23,7 @@ class Problems extends React.Component {
           this.props.problems.map( (problem, idx) => {
             return(
               <Problem
-                key={ shortid.generate() }
+                key={ problem.id }
                 id={problem.id}
                 index={idx}
                 {...this.props}
