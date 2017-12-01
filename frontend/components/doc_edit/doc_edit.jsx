@@ -33,7 +33,7 @@ class EditDocForm extends React.Component {
     this.rejoinText = this.rejoinText.bind(this);
     const doc = this.props.doc ? this.props.doc : {};
     this.state = {
-      doc
+      ...doc
     };
   }
 
@@ -55,7 +55,10 @@ class EditDocForm extends React.Component {
   }
 
   render() {
-    if (this.props.doc === undefined) return <Loading />;
+    // if (this.props.doc === undefined) return <Loading />;
+    if (!this.props.doc || !this.props.doc.problems){
+      return <Loading />;
+    }
 
     return (
       <div>
@@ -300,7 +303,6 @@ class EditDocForm extends React.Component {
     for (let h = 0; h < problems.length; h++) {
       let textPieces = problems[h].textPieces;
       let newTextPieces = [];
-      // debugger;
       for (let i = 0; i < textPieces.length; i++) {
         let textPiece = textPieces[i];
         if (textPiece.blank === 'true') {

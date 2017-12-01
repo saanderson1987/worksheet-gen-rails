@@ -8,7 +8,10 @@ class User < ApplicationRecord
 
   after_initialize :ensure_session_token
 
+  has_many :admined_courses, class_name: 'Course', foreign_key: :admin_id
   has_many :documents
+  has_many :course_subscriptions, inverse_of: :user, dependent: :destroy
+  has_many :subscribed_courses, through: :course_subscriptions, source: :course
 
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)

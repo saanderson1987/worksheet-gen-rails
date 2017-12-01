@@ -14,11 +14,9 @@ class Problems extends React.Component {
   }
 
   render() {
-
     let Problem = this.state.draggable ? DraggableProblem : RegularProblem;
-
     return (
-      <div>
+      <div className='problems'>
         {
           this.props.problems.map( (problem, idx) => {
             return(

@@ -31,13 +31,19 @@ export default class NavBar extends React.Component {
   render() {
     const pages = {
       my_subscribed_docs:
-        <div className='nav__row2-item'>Documents I'm Subscribed To</div>,
+        <div className='nav__row2-item'>
+          <Link to='/my_subscribed_docs'>Documents I'm Subscribed To</Link>
+        </div>,
       my_created_docs:
-        <div className='nav__row2-item'><Link to='/my_created_docs/'>Documents I've Created</Link></div>,
+        <div className='nav__row2-item'>
+          <Link to='/my_created_docs/'>Documents I've Created</Link>
+        </div>,
       new_doc:
         <div className='nav__row2-item'>
           <div className="plus-icon">+</div>
-          <div className='nav__row2-text_left-of-icon'>New Document</div>
+          <div className='nav__row2-text_left-of-icon'>
+            <Link to='/my_created_docs/new'>New Document</Link>
+          </div>
         </div>,
     };
 

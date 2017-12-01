@@ -6,7 +6,7 @@ import shortid from 'shortid';
 
 const mapStateToProps = (state, ownProps) => {
   const doc = state.documents[ownProps.match.params.id];
-  if (doc) {
+  if (doc && doc.problems) {
     doc.problems = Object.values(doc.problems);
     doc.problems.forEach( problem => {
       problem.id = shortid.generate();

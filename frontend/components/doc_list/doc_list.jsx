@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchDocuments } from '../../actions/document_actions.js';
+import { fetchAdminedCourses, fetchSubscribedCourses } from '../../actions/course_actions.js';
 import shortid from 'shortid';
 
 class DocList extends React.Component {
@@ -10,118 +10,68 @@ class DocList extends React.Component {
   }
 
   componentDidMount() {
-    const whichDocs = this.props.subscribed ? {subscribed: true} : {owned: true};
-    this.props.fetchDocuments(whichDocs);
+    this.fetchData(this.props.match.path);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.path !== this.props.match.path) {
+      this.fetchData(nextProps.match.path);
+    }
+  }
+
+  fetchData(path) {
+    if (path === '/my_subscribed_docs') {
+      this.props.fetchSubscribedCourses();
+    } else {
+      this.props.fetchAdminedCourses();
+    }
+  }
+
+
   render() {
+    const courseType = this.props.match.path === '/my_subscribed_docs' ? 'subscribedCourses' : 'adminedCourses';
     const path = this.props.subscribed ? 'my_subscribed_docs' : 'my_created_docs';
-    
+    // debugger
     return (
       <div>
-        <h3></h3>
-        <ul>
-          {this.props.documents ? this.props.documents.map( (doc) => {
+        {this.props.courses[courseType] ?
+          this.props.courses[courseType].map( course => {
             return (
-              <li key={ shortid.generate() }>
-                <Link to={`/${path}/${doc.id}`}>{ doc.title }</Link>
-                { doc.owner_id === this.props.currentUser.id ?
-                  <Link to={`/${path}/${doc.id}/edit`}>    Edit</Link>
-                  : ''
-                }
-              </li>
+              <div key={ shortid.generate()}>
+                <h3>{course.name}</h3>
+                <ul>
+                  {course.doc_list.map( (doc) => {
+                    return (
+                      <li key={ shortid.generate() }>
+                        <Link to={`/${path}/${doc.id}`}>{ doc.title }</Link>
+                        { this.props.subscribed ? '' :
+                        <Link to={`/${path}/${doc.id}/edit`}>    Edit</Link> }
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             );
           }) : ''
         }
-        </ul>
+        {JSON.stringify(this.props.courses[courseType])}
       </div>
     );
+
   }
 
 }
 
 const mapStateToProps = state => {
   return {
-    documents: Object.keys(state.documents).map(id => state.documents[id]),
-    currentUser: state.session.currentUser
+    courses: state.courses,
+    currentUser : state.session.currentUser
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchDocuments: (data) => dispatch(fetchDocuments(data))
+  fetchAdminedCourses: () => dispatch(fetchAdminedCourses()),
+  fetchSubscribedCourses: () => dispatch(fetchSubscribedCourses())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocList);
-
-
-
-// It is acceptable for problems ws1.problems to be an array as well
-// (works out the same, except index starts at 0).
-let ws1 = {
-  title: 'WS1',
-  owner_id: 1,
-  doc_type: 'fill-in-the-blank',
-  instructions: 'Fill in the blanks with the words in the bank.',
-  problems: {
-    1: {
-
-      textPieces: [
-        {
-          text : "Three days was simply not a(n)",
-          blank : false,
-
-        },
-        {
-          text : "acceptable",
-          blank : true,
-
-        },
-        {
-          text : "amount of time to complete such a lot of work.",
-          blank : false,
-
-        },
-      ]
-    },
-    2: {
-
-      textPieces: [
-        {
-          text : "You don't need to be a(n)",
-          blank : false,
-
-        },
-        {
-          text : "genius",
-          blank : true,
-
-        },
-        {
-          text : "to see what the problem here is.",
-          blank : false,
-
-        },
-      ]
-    },
-    3: {
-
-      textPieces: [
-        {
-          text : "Make sure you read all the",
-          blank : false,
-
-        },
-        {
-          text : "instructions",
-          blank : true,
-
-        },
-        {
-          text : "carefully before setting up the device",
-          blank : false,
-
-        },
-      ]
-    },
-  }
-};

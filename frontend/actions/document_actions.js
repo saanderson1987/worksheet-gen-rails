@@ -5,6 +5,10 @@ export const RECEIVE_ALL_DOCUMENTS = 'RECEIVE_ALL_DOCUMENTS';
 export const RECEIVE_DOCUMENT = 'RECEIVE_DOCUMENT';
 export const REMOVE_DOCUMENT = 'REMOVE_DOCUMENT';
 
+export const fetchSubscribedDocsList = data => dispatch => {
+  return DocumentApiUtil.fetchSubscribedDocsList(data).then(docList => dispatch(receiveSubscribedDocsList(docList)));
+}
+
 export const fetchDocuments = (data) => dispatch => {
   return DocumentApiUtil.fetchDocuments(data).then(documents => dispatch(receiveAllDocuments(documents)));
 };
@@ -24,6 +28,7 @@ export const updateDocument = doc => dispatch => (
 export const deleteDocument = id => dispatch => (
   DocumentApiUtil.deleteDocument(id).then(doc => dispatch(removeDocument(doc)))
 );
+
 
 const receiveAllDocuments = documents => {
 

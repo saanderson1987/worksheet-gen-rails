@@ -1,4 +1,3 @@
-
 export const fetchDocuments = (data) => (
   $.ajax({
     method: 'GET',

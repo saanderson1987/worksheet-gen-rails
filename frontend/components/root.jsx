@@ -6,7 +6,7 @@ import SessionFormContainer from './session_form/session_form_container.js';
 import DocList from './doc_list/doc_list.jsx';
 import DocView from './doc_view/doc_view.jsx';
 import DocEditContainer from './doc_edit/doc_edit_container.jsx';
-// import App from './app';
+import NewDoc from './new_doc/new_doc.jsx';
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -16,11 +16,11 @@ const Root = ({ store }) => (
         <AuthRoute path="/signup" component={SessionFormContainer} />
         <ProtectedRoute exact path='/' />
         <ProtectedRoute exact path='/my_created_docs' component={DocList} />
+        <ProtectedRoute exact path='/my_created_docs/new' component={NewDoc} />
         <ProtectedRoute exact path='/my_created_docs/:id/' component={DocView} />
         <ProtectedRoute exact path='/my_created_docs/:id/edit' component={DocEditContainer} />
-        <ProtectedRoute exact path='/my_subscribed_docs' component={DocList} subscribed={true} />
+        <ProtectedRoute exact path='/my_subscribed_docs' component={DocList} />
         <ProtectedRoute exact path='/documents/:id/' component={DocView} />
-        <ProtectedRoute exact path='/documents/:id/edit' component={DocEditContainer} />
       </Switch>
     </HashRouter>
   </Provider>

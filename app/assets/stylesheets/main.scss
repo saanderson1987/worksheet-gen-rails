@@ -28,6 +28,13 @@ button {
   font-weight: $default-font-weight;
 }
 
+select {
+	font: inherit;
+	border: 1px solid #aaaaaa;
+	padding: 10px;
+	background: #fffcfc;
+}
+
 h1 {
   font-size: 30px;
   font-weight: 700;
@@ -71,3 +78,4 @@ h1 {
 @import './NewDocForm.scss';
 @import './NavBar.scss';
 @import './DocForm.scss';
+@import './NewDoc.scss';
