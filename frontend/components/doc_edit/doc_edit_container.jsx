@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchDocument, updateDocument } from '../../actions/document_actions.js';
+import { fetchAdminedCourses } from '../../actions/course_actions.js';
 import DocEdit from './doc_edit.jsx';
 import shortid from 'shortid';
 
@@ -17,12 +18,14 @@ const mapStateToProps = (state, ownProps) => {
     });
   }
   return {
-    doc
+    doc,
+    courses: state.courses.adminedCourses
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchDocument: id => dispatch(fetchDocument(id)),
+  fetchAdminedCourses: () => dispatch(fetchAdminedCourses()),
   updateDocument: doc => dispatch(updateDocument(doc))
 });
 

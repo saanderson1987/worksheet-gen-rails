@@ -37,7 +37,7 @@ class DocView extends React.Component {
     return (
       <div className='contents-container'>
         <h1>{ this.props.doc.title }</h1>
-        <div>{this.props.doc.course}</div>
+        <div>{this.props.doc.course.name}</div>
         <Instructions instructions={this.props.doc.instructions}/>
         <WordBank wordBank={this.props.wordBank}/>
         <Problems
@@ -45,7 +45,6 @@ class DocView extends React.Component {
           handleInputChange={this.handleInputChange}
         />
         <button className='button_green' onClick={this.handleSubmit}>Submit</button>
-        {JSON.stringify(this.state)}
       </div>
     );
   }

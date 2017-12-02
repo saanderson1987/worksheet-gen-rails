@@ -4,11 +4,17 @@
   +date and time of last save appear to the right of button.
 +`<Loading>` Component and animation
 +DocList -- fetch only doc name, not whole document
--doc list -- maybe separate fetch documents action so it passes thru only docnames reducer...
++doc list -- maybe separate fetch documents action so it passes thru only docnames reducer...
++New document process
++class folders
 -DocList styling -- delete function as well
 -Login/Signup styling
-+New document process
--class folders
++DocEdit -- option to change course
+-DocEdit -- option to delete problem
+-Grade docs!!
+-Create a EditDocProperty component to share between Edit Doc and New Doc
+-New Doc -- alphabetize course list
+-New Course button
 -tabs for open docs
 -need something that says database is working when clicking on buttons that make http requests. There is sometimes lag.(new doc, edit doc)
 -simplify document create action in controller

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createDocument } from '../../actions/document_actions.js';
 import { cloneDeep } from 'lodash';
+import { createDocument } from '../../actions/document_actions.js';
+import { fetchAdminedCourses } from '../../actions/course_actions.js';
 import ButtonRow from '../ui/button_row.jsx';
 
 class NewDoc extends React.Component {
@@ -10,14 +11,21 @@ class NewDoc extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    // this.cancel = this.cancel.bind(this);
     this.state = {
       doc: {
         title: '',
         doc_type: 'fill-in-the-blank',
+        course_id: null,
       },
       submitted: false,
       redirect: false,
+      cancel: false
     };
+  }
+
+  componentDidMount() {
+    this.props.fetchAdminedCourses();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -29,6 +37,9 @@ class NewDoc extends React.Component {
   render() {
     if (this.state.redirect) {
       return <Redirect to={`/my_created_docs/${this.props.newDocId}/edit`} />;
+    }
+    if (this.state.cancel) {
+      return <Redirect to={'/my_created_docs/'} />;
     }
 
     return (
@@ -47,12 +58,17 @@ class NewDoc extends React.Component {
         </div>
         <div className='new-doc-property'>
           <div className='new-doc-property__name'>Course:</div>
-          <select name='course' onChange={this.handleChange}>
-
+          <select name='course_id' onChange={this.handleChange}>
+            {this.props.courses ? this.props.courses.map( (course, id) => {
+                return (
+                  <option key={id} value={course.id}>{course.name}</option>
+                );
+              }) : ''
+            }
           </select>
         </div>
         <ButtonRow>
-          <button>Cancel</button>
+          <button onClick={this.cancel}>Cancel</button>
           <button className='button--green' onClick={this.submitForm}>Continue</button>
         </ButtonRow>
       </div>
@@ -72,16 +88,25 @@ class NewDoc extends React.Component {
     this.props.createDocument(this.state.doc);
     this.setState({ submitted: true });
   }
+
+  cancel(event) {
+    debugger;
+    event.preventDefault();
+    this.setState({cancel: true});
+  }
+
 }
 
 const mapStateToProps = state => {
   return {
     currentUser: state.session.currentUser,
-    newDocId: state.newDocId
+    newDocId: state.newDocId,
+    courses: state.courses.adminedCourses
   };
 };
 
 const mapDispatchToProps = dispatch => ({
+  fetchAdminedCourses: () => dispatch(fetchAdminedCourses()),
   createDocument: doc => dispatch(createDocument(doc))
 });
 

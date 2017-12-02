@@ -2,11 +2,7 @@ class Api::DocumentsController < ApplicationController
   before_action :require_logged_in
 
   def index
-    if params[:owned]
-      @documents = Document.where(owner_id: current_user.id)
-        .select(:id, :title, :owner_id, :course_id) # send only relevant info => faster loading time
-    end
-
+    @documents = Document.all
   end
 
   def show
@@ -40,7 +36,6 @@ class Api::DocumentsController < ApplicationController
         }
       }
     end
-
     if @document.save
       render :show
     else
@@ -52,7 +47,7 @@ class Api::DocumentsController < ApplicationController
 
   def update
     @document = Document.find(params[:id])
-    
+
     if @document.update(document_params)
       render :show
     else

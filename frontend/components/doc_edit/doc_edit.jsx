@@ -45,6 +45,7 @@ class EditDocForm extends React.Component {
   }
 
   componentDidMount() {
+    this.props.fetchAdminedCourses();
     this.props.fetchDocument(this.props.match.params.id);
   }
 
@@ -59,7 +60,6 @@ class EditDocForm extends React.Component {
     if (!this.props.doc || !this.props.doc.problems){
       return <Loading />;
     }
-
     return (
       <div>
         <SaveBar updateDoc={this.updateDoc} updatedAt={this.props.doc.updated_at} saved={this.state.saved}/>
@@ -72,6 +72,17 @@ class EditDocForm extends React.Component {
               className='header-lg'
               onChange={ this.handleInput()}
             />
+            <div className='new-doc-property'>
+              <div className='new-doc-property__name'>Course:</div>
+              <select name='course_id' value={this.state.course_id} onChange={this.handleInput()}>
+                {this.props.courses ? this.props.courses.map( (course, id) => {
+                    return (
+                      <option key={id} value={course.id}>{course.name}</option>
+                    );
+                  }) : ''
+                }
+              </select>
+            </div>
             <Instructions
               instructions={this.state.instructions}
               edit={true}
@@ -112,6 +123,7 @@ class EditDocForm extends React.Component {
             </div>
           </div>
         </div>
+        {JSON.stringify(this.state.problems)}
       </div>
     );
   }
@@ -239,7 +251,7 @@ class EditDocForm extends React.Component {
 
   makeProbVisible(idx) {
     const problems = cloneDeep(this.state.problems);
-    problems[idx].opaque = false;
+    delete problems[idx].opaque;
     this.setState({ problems });
   }
 
