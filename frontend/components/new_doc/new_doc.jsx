@@ -12,11 +12,12 @@ class NewDoc extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
     // this.cancel = this.cancel.bind(this);
+    const course_id = this.props.courses && this.props.courses[0] ? this.props.courses[0].id : '';
     this.state = {
       doc: {
         title: '',
         doc_type: 'fill-in-the-blank',
-        course_id: null,
+        course_id,
       },
       submitted: false,
       redirect: false,
@@ -31,6 +32,16 @@ class NewDoc extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.submitted && prevProps.newDocId !== this.props.newDocId) {
       this.setState({redirect: true});
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.courses && nextProps.courses && nextProps.courses[0]) {
+      // this sets the default value of the course select element to the
+      // first admined course
+      const doc = Object.assign({}, this.state.doc);
+      doc.course_id = nextProps.courses[0].id;
+      this.setState({doc});
     }
   }
 
@@ -58,7 +69,7 @@ class NewDoc extends React.Component {
         </div>
         <div className='new-doc-property'>
           <div className='new-doc-property__name'>Course:</div>
-          <select name='course_id' onChange={this.handleChange}>
+          <select name='course_id' value={this.state.doc.course_id} onChange={this.handleChange}>
             {this.props.courses ? this.props.courses.map( (course, id) => {
                 return (
                   <option key={id} value={course.id}>{course.name}</option>

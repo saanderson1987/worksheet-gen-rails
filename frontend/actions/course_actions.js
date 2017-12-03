@@ -1,9 +1,11 @@
 import * as CourseApiUtil from '../util/course_api_util';
 import * as UserApiUtil from '../util/user_api_util';
+import * as DocumentApiUtil from '../util/document_api_util';
 import { hashHistory } from 'react-router';
 
 export const RECEIVE_SUBSCRIBED_COURSES = 'RECEIVE_SUBSCRIBED_COURSES';
 export const RECEIVE_ADMINED_COURSES = 'RECEIVE_ADMINED_COURSES';
+export const REMOVE_DOC_FROM_LIST = 'REMOVE_DOC_FROM_LIST';
 export const RECEIVE_ALL_COURSES = 'RECEIVE_ALL_COURSES';
 export const RECEIVE_COURSE = 'RECEIVE_COURSE';
 export const REMOVE_COURSE = 'REMOVE_COURSE';
@@ -14,6 +16,12 @@ export const fetchSubscribedCourses = () => dispatch => {
 
 export const fetchAdminedCourses = () => dispatch => {
   return UserApiUtil.fetchUserData({admined_courses: true}).then(courses => dispatch(receiveAdminedCourses(courses)));
+};
+
+export const deleteDocFromList = (id, courseIdx, docIdx) => {
+  return dispatch => {
+    return DocumentApiUtil.deleteDocument(id).then(doc => dispatch(removeDocFromList(id, courseIdx, docIdx)));
+  };
 };
 
 export const fetchCourses = (data) => dispatch => {
@@ -51,6 +59,13 @@ const receiveAdminedCourses = courses => {
   return {
     type: RECEIVE_ADMINED_COURSES,
     courses
+  };
+};
+
+const removeDocFromList = (id, courseIdx, docIdx) => {
+  return {
+    type: REMOVE_DOC_FROM_LIST,
+    id, courseIdx, docIdx
   };
 };
 

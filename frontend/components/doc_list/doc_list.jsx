@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchAdminedCourses, fetchSubscribedCourses } from '../../actions/course_actions.js';
-import { deleteDocument } from '../../actions/document_actions.js';
+import { fetchAdminedCourses, fetchSubscribedCourses, deleteDocFromList } from '../../actions/course_actions.js';
 import shortid from 'shortid';
 
 class DocList extends React.Component {
@@ -37,19 +36,19 @@ class DocList extends React.Component {
     return (
       <div>
         {this.props.courses[courseType] ?
-          this.props.courses[courseType].map( course => {
+          this.props.courses[courseType].map( (course, courseIdx) => {
             return (
               <div key={ shortid.generate()}>
                 <h3>{course.name}</h3>
                 <ul>
-                  {course.doc_list.map( (doc) => {
+                  {course.doc_list.map( (doc, docIdx) => {
                     return (
                       <li key={ shortid.generate() }>
                         <Link to={`/${path}/${doc.id}`}>{ doc.title }</Link>
                         { this.props.subscribed ? '' :
                           <div>
                             <Link to={`/${path}/${doc.id}/edit`}>    Edit</Link>
-                            <button onClick={this.deleteDocument(doc.id)}>Delete</button>
+                            <button onClick={this.deleteDocument(doc.id, courseIdx, docIdx)}>Delete</button>
                           </div>
                         }
 
@@ -66,9 +65,9 @@ class DocList extends React.Component {
     );
   }
 
-  deleteDocument(id) {
+  deleteDocument(id, courseIdx, docIdx) {
     return (event) => {
-      this.props.deleteDocument(id);
+      this.props.deleteDocFromList(id, courseIdx, docIdx);
     };
   }
 
@@ -84,7 +83,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   fetchAdminedCourses: () => dispatch(fetchAdminedCourses()),
   fetchSubscribedCourses: () => dispatch(fetchSubscribedCourses()),
-  deleteDocument: (id) => dispatch(deleteDocument(id))
+  deleteDocFromList: (id, courseIdx, docIdx) => dispatch(deleteDocFromList(id, courseIdx, docIdx))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocList);
