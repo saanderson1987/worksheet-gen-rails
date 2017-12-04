@@ -31,7 +31,7 @@ class DocList extends React.Component {
 
   render() {
     const courseType = this.props.match.path === '/my_subscribed_docs' ? 'subscribedCourses' : 'adminedCourses';
-    const path = this.props.subscribed ? 'my_subscribed_docs' : 'my_created_docs';
+    const path = this.props.match.path === '/my_subscribed_docs' ? 'my_subscribed_docs' : 'my_created_docs';
     if (!this.props.courses) return <Loading />;
     return (
       <div>

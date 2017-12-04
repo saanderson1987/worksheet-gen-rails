@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchDocument } from '../../actions/document_actions.js';
+import { fetchWorkedDoc, createWorkedDoc, updateWorkedDoc } from '../../actions/worked_doc_actions.js';
 import { shuffle } from '../../util/methods.js';
 import {cloneDeep} from 'lodash';
 // import DocResults from './doc_results.jsx';
+import SaveBar from '../ui/save_bar.jsx';
 import Loading from '../ui/loading.jsx';
 import Problems from './problems.jsx';
 import WordBank from './word_bank.jsx';
@@ -22,8 +24,11 @@ class DocView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.doc) {
-      this.setState( {problems: Object.values(nextProps.doc.problems)});
+    // if (nextProps.doc) {
+    //   this.setState( {problems: Object.values(nextProps.doc.problems)});
+    // }
+    if (nextProps.keyFetched) {
+      this.props.createWorkedDoc({doc_id: this.props.doc_id});
     }
   }
 
@@ -32,19 +37,22 @@ class DocView extends React.Component {
   }
 
   render() {
-    if (this.props.doc === undefined) return <Loading />;
+    if (this.props.workedDoc === undefined) return <Loading />;
 
     return (
-      <div className='contents-container'>
-        <h1>{ this.props.doc.title }</h1>
-        <div>{this.props.doc.course.name}</div>
-        <Instructions instructions={this.props.doc.instructions}/>
-        <WordBank wordBank={this.props.wordBank}/>
-        <Problems
-          problems={this.state.problems}
-          handleInputChange={this.handleInputChange}
-        />
-        <button className='button_green' onClick={this.handleSubmit}>Submit</button>
+      <div>
+        <SaveBar />
+        <div className='contents-container'>
+          <h1>{ this.props.doc.title }</h1>
+          <div>{this.props.doc.course.name}</div>
+          <Instructions instructions={this.props.doc.instructions}/>
+          <WordBank wordBank={this.props.workedDoc.wordBank}/>
+          <Problems
+            problems={this.state.problems}
+            handleInputChange={this.handleInputChange}
+          />
+          <button className='button_green' onClick={this.handleSubmit}>Submit</button>
+        </div>
       </div>
     );
   }
@@ -86,15 +94,26 @@ const generateBlanks = (doc) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const docWithBlanks = generateBlanks(state.documents[ownProps.match.params.id]);
+  // const docWithBlanks = generateBlanks(state.documents[ownProps.match.params.id]);
+  // return {
+  //   doc: docWithBlanks.doc,
+  //   wordBank : docWithBlanks.wordBank
+  // };
+  const doc_id = ownProps.match.params.id
+  const keyFetched = state.documents[doc_id] ? true : false;
   return {
-    doc: docWithBlanks.doc,
-    wordBank : docWithBlanks.wordBank
+    keyFetched,
+    doc: state.documents[doc_id],
+    doc_id: ownProps.match.params.id,
+    workedDoc: state.workedDocs[doc_id]
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchDocument: id => dispatch(fetchDocument(id))
+  fetchDocument: id => dispatch(fetchDocument(id)),
+  fetchWorkedDoc: id => dispatch(fetchWorkedDoc(id)),
+  createWorkedDoc: workedDoc => dispatch(createWorkedDoc(workedDoc)),
+  updateWorkedDoc: workedDoc => dispatch(updateWorkedDoc(workedDoc)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocView);

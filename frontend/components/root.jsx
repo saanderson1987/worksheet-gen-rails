@@ -20,6 +20,7 @@ const Root = ({ store }) => (
         <ProtectedRoute exact path='/my_created_docs/:id/' component={DocView} />
         <ProtectedRoute exact path='/my_created_docs/:id/edit' component={DocEditContainer} />
         <ProtectedRoute exact path='/my_subscribed_docs' component={DocList} />
+        <ProtectedRoute exact path='/my_subscribed_docs/:id/' component={DocView} />
         <ProtectedRoute exact path='/documents/:id/' component={DocView} />
       </Switch>
     </HashRouter>

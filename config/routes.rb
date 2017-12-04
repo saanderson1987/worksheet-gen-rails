@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :documents
       resources :courses
       resources :course_subscriptions
+      resources :worked_documents
     end
   end
 

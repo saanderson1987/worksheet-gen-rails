@@ -15,7 +15,7 @@ class Api::CourseSubscriptionsController < ApplicationController
       render :show
     else
       @course_subscription.save!
-      render json: @document.errors.full_messsages, status: 422
+      render json: @course_subscription.errors.full_messsages, status: 422
     end
   end
 
@@ -40,7 +40,7 @@ class Api::CourseSubscriptionsController < ApplicationController
   private
 
   def course_subscription_params
-    params.require(:course_subscription).permit(:name)
+    params.require(:course_subscription).permit(:user_id, :course_id)
   end
 
 end

@@ -7,7 +7,7 @@ import update from 'immutability-helper';
 import shortid from 'shortid';
 import merge from 'lodash/merge';
 
-import SaveBar from './save_bar.jsx';
+import SaveBar from '../ui/save_bar.jsx';
 import Loading from '../ui/loading.jsx';
 import Instructions from '../doc_view/instructions.jsx';
 import Problems from './Problems.jsx';
@@ -62,7 +62,7 @@ class EditDocForm extends React.Component {
     }
     return (
       <div>
-        <SaveBar updateDoc={this.updateDoc} updatedAt={this.props.doc.updated_at} saved={this.state.saved}/>
+        <SaveBar save={this.updateDoc} updatedAt={this.props.doc.updated_at} saved={this.state.saved}/>
         <div className='edit-doc-container'>
           <div>
             <input

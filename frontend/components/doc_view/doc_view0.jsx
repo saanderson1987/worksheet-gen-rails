@@ -1,77 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchDocument } from '../../actions/document_actions.js';
+import { shuffle } from '../../util/methods.js';
 import {cloneDeep} from 'lodash';
 // import DocResults from './doc_results.jsx';
+import Loading from '../ui/loading.jsx';
 import Problems from './problems.jsx';
 import WordBank from './word_bank.jsx';
 import Instructions from './instructions.jsx';
-
-import {ws1} from '../../util/exampleDB.js';
-import {shuffle} from '../../util/methods.js';
-
-const container = (props) => {
-  const wordBank = [];
-  const genBlanks = (problems) => {
-    let probsWithBlanks = cloneDeep(problems);
-    problems.forEach( (problem, problemIdx) => {
-      problem.textPieces.forEach( (textPiece, idx) => {
-        if (textPiece.blank) {
-          wordBank.push(textPiece.text);
-          probsWithBlanks[problemIdx].textPieces[idx].text = '';
-        }
-      });
-    });
-    return probsWithBlanks;
-  };
-  const probsWithBlanks = genBlanks(ws1.probs);
-  shuffle(wordBank);
-
-  return (
-    <DocView
-      {...props}
-      problems={probsWithBlanks}
-      title={ws1.title}
-      course={ws1.course}
-      instructions={ws1.instructions}
-      wordBank={wordBank}
-    />
-  );
-};
-
-export default container;
 
 class DocView extends React.Component {
   constructor(props) {
     super(props);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    const problems = this.props.doc ? Object.values(this.props.doc.problems) : [];
     this.state = {
-      problems: this.props.problems,
+      problems,
       graded: false
     };
   }
 
   componentWillReceiveProps(nextProps) {
-      if (nextProps.problems.length > 0) {
-      this.setState( {problems: nextProps.problems});
+    if (nextProps.doc) {
+      this.setState( {problems: Object.values(nextProps.doc.problems)});
     }
   }
 
+  componentDidMount() {
+    this.props.fetchDocument(this.props.match.params.id);
+  }
+
   render() {
-    if (this.props.problems.length < 1) {
-      return(<div>Loading...
-          <br /> this.state:
-          {JSON.stringify(this.state)}
-          <br />this.props:
-          {JSON.stringify(this.props)}</div>);
-    }
+    if (this.props.doc === undefined) return <Loading />;
 
     return (
-      <div>
-        <h1>{ this.props.title }</h1>
-        <div>{this.props.course}</div>
-        <Instructions instructions={this.props.instructions}/>
+      <div className='contents-container'>
+        <h1>{ this.props.doc.title }</h1>
+        <div>{this.props.doc.course.name}</div>
+        <Instructions instructions={this.props.doc.instructions}/>
         <WordBank wordBank={this.props.wordBank}/>
         <Problems
           problems={this.state.problems}
@@ -84,6 +51,7 @@ class DocView extends React.Component {
 
   handleInputChange(problemIdx, textPieceIdx) {
     return (event) => {
+      event.preventDefault();
       const value = event.target.value;
       const problems = cloneDeep(this.state.problems);
       problems[problemIdx].textPieces[textPieceIdx].text = value;
@@ -98,14 +66,35 @@ class DocView extends React.Component {
 
 }
 
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-//     doc: state.documents[ownProps.match.params.id]
-//   };
-// };
-//
-// const mapDispatchToProps = dispatch => ({
-//   fetchDocument: id => dispatch(fetchDocument(id))
-// });
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(DocView);
+const generateBlanks = (doc) => {
+  let docWithBlanks = cloneDeep(doc);
+  let wordBank = [];
+  if (doc) {
+    Object.values(doc.problems).forEach( (problem, problemIdx) => {
+      Object.values(problem.textPieces).forEach( (textPiece, idx) => {
+        if (textPiece.blank === 'true') {
+          docWithBlanks.problems[problemIdx].textPieces[idx].text = '';
+          wordBank.push(textPiece.text);
+        }
+      });
+    });
+  }
+  return {
+    doc: docWithBlanks,
+    wordBank: shuffle(wordBank)
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const docWithBlanks = generateBlanks(state.documents[ownProps.match.params.id]);
+  return {
+    doc: docWithBlanks.doc,
+    wordBank : docWithBlanks.wordBank
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  fetchDocument: id => dispatch(fetchDocument(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DocView);

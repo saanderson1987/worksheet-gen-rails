@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :documents
   has_many :course_subscriptions, inverse_of: :user, dependent: :destroy
   has_many :subscribed_courses, through: :course_subscriptions, source: :course
+  has_many :worked_documents, dependent: :destroy
 
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)

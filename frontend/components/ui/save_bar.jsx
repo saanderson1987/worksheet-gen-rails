@@ -4,7 +4,7 @@ export default class SaveBar extends React.Component {
   render() {
     const saveButton = this.props.saved ?
       <button className='button--small'>SAVED</button> :
-      <button className='button--small button--green' onClick={this.props.updateDoc}>
+      <button className='button--small button--green' onClick={this.props.save}>
         SAVE CHANGES
       </button>;
     return (
