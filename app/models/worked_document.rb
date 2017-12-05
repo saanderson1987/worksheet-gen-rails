@@ -1,12 +1,9 @@
 class WorkedDocument < ApplicationRecord
   validates :doc_id, :user_id, presence: true
+  validates :doc_id, uniqueness: { scope: :user_id }
 
   belongs_to :user
   belongs_to :document, class_name: 'Document', foreign_key: :doc_id
-  attr_accessor :word_bank
-
-  before_save :set_problems
-
 
   def set_problems
     problems = self.document.problems.deep_dup

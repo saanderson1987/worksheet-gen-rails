@@ -6,10 +6,10 @@ export const fetchWorkedDocs = (data) => (
   })
 );
 
-export const fetchWorkedDoc = (id) => (
+export const fetchWorkedDoc = (docId) => (
   $.ajax({
     method: 'GET',
-    url: `api/worked_documents/${id}`
+    url: `api/worked_documents/${docId}`
   })
 );
 

@@ -9,8 +9,8 @@ export const fetchWorkedDocs = (data) => dispatch => {
   return WorkedDocApiUtil.fetchWorkedDocs(data).then(workedDocs => dispatch(receiveAllWorkedDocs(workedDocs)));
 };
 
-export const fetchWorkedDoc = id => dispatch => (
-  WorkedDocApiUtil.fetchWorkedDoc(id).then(workedDoc => dispatch(receiveWorkedDoc(workedDoc)))
+export const fetchWorkedDoc = docId => dispatch => (
+  WorkedDocApiUtil.fetchWorkedDoc(docId).then(workedDoc => dispatch(receiveWorkedDoc(workedDoc)))
 );
 
 export const createWorkedDoc = workedDoc => dispatch => {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171203171535) do
+ActiveRecord::Schema.define(version: 20171204232128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,7 +62,9 @@ ActiveRecord::Schema.define(version: 20171203171535) do
     t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "word_bank", default: [], array: true
     t.index ["doc_id"], name: "index_worked_documents_on_doc_id"
+    t.index ["user_id", "doc_id"], name: "index_worked_documents_on_user_id_and_doc_id", unique: true
     t.index ["user_id"], name: "index_worked_documents_on_user_id"
   end
 

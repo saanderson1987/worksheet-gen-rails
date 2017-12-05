@@ -7,7 +7,7 @@ class Problems extends React.Component {
     return (
       <div style={{paddingBottom: '20px'}}>
         {
-          this.props.problems.map( (problem, idx) => {
+          Object.values(this.props.problems).map( (problem, idx) => {
             return (
               <div className='doc-form__problem' key={idx}>
                 <div>{idx+1}.</div>
