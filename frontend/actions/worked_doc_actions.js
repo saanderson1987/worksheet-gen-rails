@@ -4,6 +4,7 @@ import { hashHistory } from 'react-router';
 export const RECEIVE_ALL_WORKED_DOCS = 'RECEIVE_ALL_WORKED_DOCS';
 export const RECEIVE_WORKED_DOC = 'RECEIVE_WORKED_DOC';
 export const REMOVE_WORKED_DOC = 'REMOVE_WORKED_DOC';
+export const RECEIVE_RESET_WORKED_DOC = 'RECEIVE_RESET_WORKED_DOC';
 
 export const fetchWorkedDocs = (data) => dispatch => {
   return WorkedDocApiUtil.fetchWorkedDocs(data).then(workedDocs => dispatch(receiveAllWorkedDocs(workedDocs)));
@@ -25,6 +26,9 @@ export const deleteWorkedDoc = id => dispatch => (
   WorkedDocApiUtil.deleteWorkedDoc(id).then(workedDoc => dispatch(removeWorkedDoc(workedDoc)))
 );
 
+export const resetBlanks = workedDoc => dispatch => (
+  WorkedDocApiUtil.updateWorkedDoc(workedDoc).then(updatedWorkedDoc => dispatch(receiveResetWorkedDoc(updatedWorkedDoc)))
+);
 
 export const receiveAllWorkedDocs = workedDocs => {
   return {
@@ -40,5 +44,10 @@ export const receiveWorkedDoc = workedDoc => ({
 
 const removeWorkedDoc = workedDoc => ({
   type: REMOVE_WORKED_DOC,
+  workedDoc
+});
+
+export const receiveResetWorkedDoc = workedDoc => ({
+  type: RECEIVE_RESET_WORKED_DOC,
   workedDoc
 });

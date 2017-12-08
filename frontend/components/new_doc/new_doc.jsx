@@ -101,7 +101,6 @@ class NewDoc extends React.Component {
   }
 
   cancel(event) {
-    debugger;
     event.preventDefault();
     this.setState({cancel: true});
   }

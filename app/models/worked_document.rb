@@ -17,6 +17,26 @@ class WorkedDocument < ApplicationRecord
       end
     end
     self.problems = problems
-    self.word_bank = word_bank
+    self.word_bank = word_bank.shuffle
   end
+
+  def grade
+    worked_problems = self.problems.deep_dup
+    self.document.problems.each do |problem_idx, problem|
+      problem['textPieces'].each do |text_piece_idx, text_piece|
+        if text_piece['blank'] == 'true'
+          worked_text_piece = worked_problems[problem_idx]['textPieces'][text_piece_idx]
+          if worked_text_piece['text'] === text_piece['text']
+            worked_text_piece['correct'] = true
+          else
+            worked_text_piece['correct'] = false
+          end
+        end
+      end
+    end
+    self.graded = true
+    self.problems = worked_problems
+    self.save
+  end
+
 end

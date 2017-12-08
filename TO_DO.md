@@ -11,13 +11,16 @@
 -Login/Signup styling
 +DocEdit -- option to change course
 -DocEdit -- option to delete problem
--Grade docs!!
++Grade docs!!
+-Don't fetch document in DocView, fetch only workedDoc. ??
++Reset button for DocView / workedDoc
 -Create a EditDocProperty component to share between Edit Doc and New Doc
 -New Doc -- alphabetize course list
 -New Course button
 -tabs for open docs
 -need something that says database is working when clicking on buttons that make http requests. There is sometimes lag.(new doc, edit doc)
 -simplify document create action in controller
+-Edit doc -- need delete problem button.
 
 
 note:

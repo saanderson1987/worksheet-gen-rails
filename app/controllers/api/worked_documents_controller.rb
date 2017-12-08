@@ -15,16 +15,26 @@ class Api::WorkedDocumentsController < ApplicationController
 
   def create
     @worked_document = WorkedDocument.new(user_id: current_user.id, doc_id: worked_document_params[:doc_id])
-    @worked_document.set_problems
+
     save
   end
 
   def update
     @worked_document = WorkedDocument.find(params[:id])
-    if @worked_document.update(worked_document_params)
-      render :show
+    if worked_document_params[:graded] == 'true'
+      if @worked_document.update(worked_document_params)
+        @worked_document.grade
+        render :show
+      end
+    elsif worked_document_params[:reset]
+      @worked_document.graded = false
+      save
     else
-      render json: @worked_document.errors.full_messages, status: 422
+      if @worked_document.update(worked_document_params)
+        render :show
+      else
+        render json: @worked_document.errors.full_messages, status: 422
+      end
     end
   end
 
@@ -40,10 +50,11 @@ class Api::WorkedDocumentsController < ApplicationController
   private
 
   def worked_document_params
-    params.require(:worked_document).permit(:doc_id, :graded, :score, problems: {})
+    params.require(:worked_document).permit(:doc_id, :graded, :score, :reset, problems: {})
   end
 
   def save
+    @worked_document.set_problems
     if @worked_document.save
       render :show
     else
