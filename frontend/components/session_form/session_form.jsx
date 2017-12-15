@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import Banner from '../nav_bar/banner.jsx';
+import ButtonRow from '../ui/button_row.jsx';
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -31,9 +33,9 @@ class SessionForm extends React.Component {
 
   navLink() {
     if (this.props.formType === 'login') {
-      return <Link to="/signup">sign up instead</Link>;
+      return <Link to="/signup">sign up</Link>;
     } else {
-      return <Link to="/login">log in instead</Link>;
+      return <Link to="/login">log in</Link>;
     }
   }
 
@@ -51,33 +53,38 @@ class SessionForm extends React.Component {
 
   render() {
     return (
-      <div className="login-form-container">
-        <form onSubmit={this.handleSubmit} className="login-form-box">
-          Welcome!
-          <br/>
-          Please {this.props.formType} or {this.navLink()}
-          {this.renderErrors()}
-          <div className="login-form">
-            <br/>
-            <label>Username:
-              <input type="text"
-                value={this.state.username}
-                onChange={this.update('username')}
-                className="login-input"
-              />
-            </label>
-            <br/>
-            <label>Password:
-              <input type="password"
-                value={this.state.password}
-                onChange={this.update('password')}
-                className="login-input"
-              />
-            </label>
-            <br/>
-            <input type="submit" value="Submit" />
-          </div>
-        </form>
+      <div>
+        <nav><Banner /></nav>
+        <div className="login-form-container">
+          <form onSubmit={this.handleSubmit} className="login-form-box">
+            <div>Welcome!</div>
+            Please {this.props.formType} or <span style={{textDecoration: 'underline', color: '#5083d8'}}>{this.navLink()}</span> instead.
+            {this.renderErrors()}
+            <div className="login-form">
+              <br/>
+              <div>Username:{' '}
+                <input type="text"
+                  value={this.state.username}
+                  onChange={this.update('username')}
+                  className="login-input"
+                />
+              </div>
+              <br/>
+              <div>Password:{' '}
+                <input type="password"
+                  value={this.state.password}
+                  onChange={this.update('password')}
+                  className="login-input"
+                />
+              </div>
+              <br/>
+              {/* <input type="submit" value="Submit" /> */}
+              <ButtonRow>
+                <button className='button--green' onClick={this.handleSubmit}>Submit</button>
+              </ButtonRow>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

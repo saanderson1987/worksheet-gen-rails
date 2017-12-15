@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchAdminedCourses, fetchSubscribedCourses, deleteDocFromList } from '../../actions/course_actions.js';
 import shortid from 'shortid';
+import Loading from '../ui/loading.jsx';
+import Course from './course.jsx';
 
 class DocList extends React.Component {
   constructor(props) {
@@ -28,39 +30,22 @@ class DocList extends React.Component {
     }
   }
 
-
   render() {
-    const courseType = this.props.match.path === '/my_subscribed_docs' ? 'subscribedCourses' : 'adminedCourses';
-    const path = this.props.match.path === '/my_subscribed_docs' ? 'my_subscribed_docs' : 'my_created_docs';
-    if (!this.props.courses) return <Loading />;
-    return (
-      <div>
-        {this.props.courses[courseType] ?
-          this.props.courses[courseType].map( (course, courseIdx) => {
-            return (
-              <div key={ shortid.generate()}>
-                <h3>{course.name}</h3>
-                <ul>
-                  {course.doc_list.map( (doc, docIdx) => {
-                    return (
-                      <li key={ shortid.generate() }>
-                        <Link to={`/${path}/${doc.id}`}>{ doc.title }</Link>
-                        { this.props.subscribed ? '' :
-                          <div>
-                            <Link to={`/${path}/${doc.id}/edit`}>    Edit</Link>
-                            <button onClick={this.deleteDocument(doc.id, courseIdx, docIdx)}>Delete</button>
-                          </div>
-                        }
+    const subscribed = this.props.match.path === '/my_subscribed_docs';
+    const courseType = subscribed ? 'subscribedCourses' : 'adminedCourses';
+    const path = subscribed ? 'my_subscribed_docs' : 'my_created_docs';
 
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            );
-          }) : ''
-        }
-        {JSON.stringify(this.props.courses[courseType])}
+    if (!this.props.courses[courseType]) return <Loading />;
+
+    return (
+      <div className='contents-container'>
+        {this.props.courses[courseType].map( (course, courseIdx) => {
+          return (
+            <Course key={ shortid.generate()} course={course}
+              courseIdx={courseIdx} deleteDocument={this.deleteDocument}
+              subscribed={subscribed}/>
+          );
+        })}
       </div>
     );
   }

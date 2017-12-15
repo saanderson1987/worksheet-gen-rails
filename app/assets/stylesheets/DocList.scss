@@ -1,0 +1,56 @@
+.name-and-icon {
+  cursor: pointer;
+  padding-bottom: 15px;
+}
+
+.name-and-icon i {
+  font-size: 30px;
+  vertical-align: sub;
+}
+
+.name-and-icon > div {
+  display: inline;
+}
+
+.caret {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid black;
+  border-radius: 3px;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.caret--down {
+  transform: rotate(90deg);
+}
+
+.folder {
+  color: #f7ba7b;
+  padding-left: 15px;
+}
+
+.icon-name {
+  padding-left: 15px;
+}
+
+.icon-name:hover {
+  text-decoration: underline;
+}
+
+.doc-list-item {
+  padding-left: 73px;
+  padding-bottom: 15px;
+}
+
+.doc-list-item * {
+  display: inline;
+}
+
+.doc-list-item__edit {
+  text-decoration: underline;
+  padding-left: 15px;
+  cursor: pointer;
+}

@@ -7,21 +7,23 @@
 +doc list -- maybe separate fetch documents action so it passes thru only docnames reducer...
 +New document process
 +class folders
--DocList styling -- delete function as well
--Login/Signup styling
++DocList styling -- delete function as well
 +DocEdit -- option to change course
 -DocEdit -- option to delete problem
 +Grade docs!!
 -Don't fetch document in DocView, fetch only workedDoc. ??
 +Reset button for DocView / workedDoc
+-Login/Signup styling
 -Create a EditDocProperty component to share between Edit Doc and New Doc
 -New Doc -- alphabetize course list
+-New Doc -- cancel button goes BACK
 -New Course button
 -tabs for open docs
 -need something that says database is working when clicking on buttons that make http requests. There is sometimes lag.(new doc, edit doc)
 -simplify document create action in controller
 -Edit doc -- need delete problem button.
-
+-DocList -- Alternative delete button - make it part of a three dots drop down ?
+-DocEdit -- problem disappears
 
 note:
   For faster page loading, I disabled debugging in development mode. In the file `development.rb`, I changed `config.assets.debug`to false. See http://guides.rubyonrails.org/asset_pipeline.html#turning-debugging-off

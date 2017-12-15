@@ -25,6 +25,7 @@ nav {
 .nav__row2-item {
   border-right: 1px solid $nav-text-color;
   padding: 10px 15px;
+  cursor: pointer;
 }
 
 .nav__row2-item--selected {

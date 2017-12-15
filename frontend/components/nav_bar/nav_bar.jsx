@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import shortid from 'shortid';
+import Banner from './banner.jsx';
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -32,12 +33,13 @@ export default class NavBar extends React.Component {
 
     return (
         <nav>
-          <div className="nav__row1">
+          {/* <div className="nav__row1">
             <div className="nav__logo">Worksheet Generator</div>
             <div style={{cursor: 'pointer'}} onClick={this.props.logout}>
               Logout
             </div>
-          </div>
+          </div> */}
+          <Banner logout={this.props.logout}/>
           <div className="nav__row2" >
             { Object.values(pages).map( page => (
               <div key={shortid.generate()}>{page}</div>)

@@ -11,7 +11,7 @@ class NewDoc extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
-    // this.cancel = this.cancel.bind(this);
+    this.cancel = this.cancel.bind(this);
     const course_id = this.props.courses && this.props.courses[0] ? this.props.courses[0].id : '';
     this.state = {
       doc: {
