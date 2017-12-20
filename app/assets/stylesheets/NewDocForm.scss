@@ -1,3 +1,10 @@
+.text-piece {
+  display: inline;
+  border-bottom: 1px solid gray;
+  padding-bottom: 4px;
+  line-height: 2;
+}
+
 .edit-doc-container {
   padding: 13px;
 }
@@ -71,7 +78,7 @@
   // align-items: flex-end;
   padding-bottom: 3px;
   margin: 10px;
-  border-bottom: 1px solid gray;
+  // border-bottom: 1px solid gray;
 }
 
 .modify-blank {
@@ -107,9 +114,10 @@
 .blank {
   border: 1px solid #a9a9a9;
   align-items: center;
-  display: inline;
+  display: inline-block;
   margin: 0px 7px;
-  padding: 1px;
+  // padding: 1px;
+  line-height: initial;
 }
 
 .blank input {
